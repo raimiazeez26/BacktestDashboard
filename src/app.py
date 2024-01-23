@@ -87,44 +87,6 @@ table_style = {"height": '100%', 'border-radius': '13px',
                'font-size': '1vmin', 'color': '#2e97a4'}
 
 
-def plot_fig(df, symbol, date):
-    df = df.set_index('datetime')
-    candlestick = go.Candlestick(
-        x=df.index,
-        open=df['Open'],
-        high=df['High'],
-        low=df['Low'],
-        close=df['Close']
-    )
-
-    fig = go.Figure(data=[candlestick])
-    fig.update_xaxes(
-        rangebreaks=[
-            dict(bounds=["sat", "mon"]),  # hide weekends
-        ])
-
-    fig.update_layout(
-        title=f"{symbol} Chart",
-        yaxis_title=f"{symbol}",
-        margin=dict(l=1, r=1, t=32, b=1), )
-    fig.update(layout_xaxis_rangeslider_visible=False)
-
-    if date is not None:
-        for i, data in df.iterrows():
-
-            if data['date'] == date and data['signal'] == 'Sell':
-                fig.add_annotation(x=data['date'], y=data['High'] + 0.01000, xref='x', yref='y', text="▼",
-                                   showarrow=False,
-                                   xanchor='auto', font=dict(size=20, color='Red'))
-
-            elif data['date'] == date and data['signal'] == 'Buy':
-                fig.add_annotation(x=data['date'], y=data['Low'] - 0.01000, xref='x', yref='y', text="▲",
-                                   showarrow=False,
-                                   xanchor='auto', font=dict(size=20, color='LightSeaGreen'))
-
-    return fig
-
-
 def plot_pnl(df, symbol):
     fig = px.line(df, x="open_datetime", y="pnl", title=f'{symbol} Profit/Loss Chart')
     fig.update_layout(
@@ -196,7 +158,7 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col([
             html.H1('BACKTEST DASHBOARD'),
-            html.H5('Please click on a date to highlight the day on the chart')
+            html.H5('Select Buy & Sell Conditions, and the backtest parameter, then run backtest. ')
         ], width=8, class_name='p-1 text-center', id='header'),
     ], justify='center', style={"height": "15%"}),
 
