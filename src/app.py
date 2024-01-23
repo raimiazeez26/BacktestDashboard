@@ -12,7 +12,6 @@ from dash.dependencies import Input, Output, State
 from dash.exceptions import PreventUpdate
 import pandas as pd
 import numpy as np
-from dash_bootstrap_templates import ThemeSwitchAIO, ThemeChangerAIO, template_from_url
 import plotly.graph_objects as go
 import plotly.express as px
 
@@ -596,4 +595,4 @@ def indicator_type(buy_ind2_type, sell_ind2_type):
 
 if __name__ == '__main__':
     # starts the server
-    app.run(jupyter_mode='external', port=2020)
+    app.run_server()
